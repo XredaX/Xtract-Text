@@ -8,6 +8,9 @@ import logging
 
 logging.basicConfig(level=logging.INFO)  # Configure logging level
 
+# Set the TESSDATA_PREFIX environment variable
+os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
+
 class OCR:
     def __init__(self):
         self.path = '/usr/bin/tesseract'
@@ -21,6 +24,7 @@ class OCR:
         except Exception as e:
             logging.error(f"Error in extract method: {e}")
             return "Error"
+
 
 async def handle_image(update: Update, context):
     file = await update.message.photo[-1].get_file()
