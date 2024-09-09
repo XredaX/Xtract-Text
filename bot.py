@@ -4,6 +4,10 @@ from PIL import Image
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 
+import logging
+
+logging.basicConfig(level=logging.INFO)  # Configure logging level
+
 class OCR:
     def __init__(self):
         self.path = '/usr/bin/tesseract'
@@ -15,25 +19,30 @@ class OCR:
             text = pytesseract.image_to_string(img)
             return text
         except Exception as e:
-            print(f"Error in extract method: {e}")
+            logging.error(f"Error in extract method: {e}")
             return "Error"
-        
-ocr = OCR()
 
 async def handle_image(update: Update, context):
     file = await update.message.photo[-1].get_file()
     file_path = f'{file.file_id}.jpg'
     try:
         await file.download_to_drive(file_path)
-        text = ocr.extract(file_path)
-        await update.message.reply_text(f"{text}")
+        if os.path.exists(file_path):
+            logging.info(f"File {file_path} downloaded successfully.")
+            text = ocr.extract(file_path)
+            await update.message.reply_text(f"{text}")
+        else:
+            logging.error(f"File {file_path} not found.")
+            await update.message.reply_text("File download failed.")
     except Exception as e:
-        print(f"Error handling image: {e}")
+        logging.error(f"Error handling image: {e}")
         await update.message.reply_text("An error occurred while processing the image.")
     finally:
         if os.path.exists(file_path):
             os.remove(file_path)
 
+
+ocr = OCR()
 
 async def start(update: Update, context):
     await update.message.reply_text("Send me an image and I'll extract the text!")
