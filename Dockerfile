@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-eng \
     libtesseract-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && find /usr/share/tesseract-ocr/ -type f
 
 # Set Tesseract data directory environment variable
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
