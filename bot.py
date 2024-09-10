@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)  # Configure logging level
 
 # Set the TESSDATA_PREFIX environment variable
-os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
+os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/5/tessdata'
 
 class OCR:
     def __init__(self):

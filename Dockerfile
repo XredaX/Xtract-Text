@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && find /usr/share/tesseract-ocr/ -type f
 
 # Set Tesseract data directory environment variable
-ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
 
 # Copy the current directory contents into the container at /app
 COPY . /app
