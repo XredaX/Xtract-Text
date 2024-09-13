@@ -52,9 +52,7 @@ async def start(update: Update, context):
     await update.message.reply_text("Send me an image and I'll extract the text!")
 
 if __name__ == '__main__':
-    # BOT_TOKEN = '7525646911:AAEPXkuCj34tA2HsGqbDUnGia8hQjoBCVsw'
     BOT_TOKEN = os.getenv('BOT_TOKEN')
-
 
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
